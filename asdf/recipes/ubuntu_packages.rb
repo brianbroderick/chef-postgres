@@ -16,6 +16,7 @@ package "libyaml-dev"
 package "libxslt-dev"
 package "m4"
 package "unixodbc-dev"
+# package "ruby" # so sudo has ruby available
 
 version = node["asdf"]["version"]
 codename = node["asdf"]["release_apt_codename"]
