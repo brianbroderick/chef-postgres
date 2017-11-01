@@ -119,6 +119,14 @@ class Chef
         ::BinaryRound.call(effective_cache)
       end
 
+      def max_connections
+        { web:  [500, connection_math(10)].min,
+          oltp: [500, connection_math(10)].min,
+          dw:   [100, connection_math(30)].min,
+          mixed: [200, connection_math(15)].min,
+          desktop: [50, (connection_math(20)].min }.fetch(workload)
+      end
+
       def work_memory
         # This size is applied to each and every sort done by each user,
         # and complex queries can use multiple working memory sort buffers.
