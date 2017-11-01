@@ -19,7 +19,7 @@ package "unixodbc-dev"
 package "nodejs-legacy"
 package "npm"
 
-version = node["asdf"]["postgres_version"]
+version = node["asdf"]["version"]
 codename = node["asdf"]["release_apt_codename"]
 
 apt_repository "apt.postgresql.org" do
