@@ -1,4 +1,4 @@
-template "/etc/environment" do
+template "/etc/environment1" do
   source "environment.erb"
   mode 0644
   owner "root"
