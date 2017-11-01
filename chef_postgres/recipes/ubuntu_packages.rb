@@ -106,16 +106,16 @@ bash "compile_hypopg" do
   notifies :run, "ruby_block[log_compile_hypopg]", :before
 end
 
-# bash "compile_redislog" do
-#   action :run
-#   code <<-EOF_CDB
-#   git clone https://github.com/2ndquadrant-it/redislog.git -b master --single-branch
-#   cd /redislog
-#   make && make install
-#   cd /
-#   rm -rf redislog
-#   EOF_CDB
-#   notifies :run, "ruby_block[log_compile_redislog]", :before
-# end
+bash "compile_redislog" do
+  action :run
+  code <<-EOF_CDB
+  git clone https://github.com/2ndquadrant-it/redislog.git -b master --single-branch
+  cd /redislog
+  make && make install
+  cd /
+  rm -rf redislog
+  EOF_CDB
+  notifies :run, "ruby_block[log_compile_redislog]", :before
+end
 
 
