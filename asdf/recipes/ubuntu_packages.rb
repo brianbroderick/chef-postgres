@@ -31,8 +31,3 @@ end
 
 package "postgresql-client-common"
 package "postgresql-client-#{version}"
-
-bash "install_brunch" do
-  cwd "/home/ubuntu"
-  code "npm install -g brunch"
-end
