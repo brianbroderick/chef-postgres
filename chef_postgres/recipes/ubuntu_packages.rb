@@ -5,9 +5,9 @@ version = node["chef_postgres"]["version"]
 ::Chef::Log.info("** Install essential build tools **")
 
 # For redislog
-# package "libssl-dev"
-# package "libkrb5-dev"
-# package "libhiredis-dev"
+package "libssl-dev"
+package "libkrb5-dev"
+package "libhiredis-dev"
 
 # For Debezium / Decoderbufs
 package "software-properties-common" do
