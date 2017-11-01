@@ -16,7 +16,6 @@ package "libyaml-dev"
 package "libxslt-dev"
 package "m4"
 package "unixodbc-dev"
-package "nodejs-legacy"
 package "npm"
 
 version = node["asdf"]["version"]
