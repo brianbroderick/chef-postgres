@@ -44,7 +44,7 @@ class Chef
           oltp: [500, connection_math(10)].min,
           dw:   [100, connection_math(30)].min,
           mixed: [200, connection_math(15)].min,
-          desktop: [50, connection_math(20)].min }.fetch(workload)
+          desktop: [50, (connection_math(20)].min }.fetch(workload)
       end
 
       def connection_math(desired_work_mem)
