@@ -6,9 +6,6 @@ require "aws-sdk"
 
 include_recipe "chef_postgres::log_output"
 
-node.default["chef_postgres"]["pg_config"]["cluster_type"] = "hot_standby" # opts: standalone, warm_standby, hot_standby
-node.default["chef_postgres"]["pg_config"]["pg_node"] = "master" # opts: master, standby
-
 repl_user = node["chef_postgres"]["vars"]["repl_user"]
 repl_pass = node["chef_postgres"]["vars"]["repl_pass"]
 backup_dir = node["chef_postgres"]["pg_config"]["backup_directory"]

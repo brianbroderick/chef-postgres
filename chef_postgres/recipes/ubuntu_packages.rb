@@ -4,12 +4,6 @@ version = node["chef_postgres"]["version"]
 
 ::Chef::Log.info("** Install essential build tools **")
 
-# For redislog
-package "libssl-dev"
-package "libkrb5-dev"
-package "libhiredis-dev"
-
-# For Debezium / Decoderbufs
 package "software-properties-common" do
   options "--no-install-recommends"
 end
@@ -104,18 +98,6 @@ bash "compile_hypopg" do
   rm -rf hypopg
   EOF_CDB
   notifies :run, "ruby_block[log_compile_hypopg]", :before
-end
-
-bash "compile_redislog" do
-  action :run
-  code <<-EOF_CDB
-  git clone https://github.com/2ndquadrant-it/redislog.git -b master --single-branch
-  cd /redislog
-  make && make install
-  cd /
-  rm -rf redislog
-  EOF_CDB
-  notifies :run, "ruby_block[log_compile_redislog]", :before
 end
 
 

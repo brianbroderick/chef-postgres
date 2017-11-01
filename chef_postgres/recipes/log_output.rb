@@ -66,11 +66,6 @@ ruby_block "log_compile_hypopg" do
   action :nothing
 end
 
-ruby_block "log_compile_redislog" do
-  block { ::Chef::Log.info("** Compile RedisLog **") }
-  action :nothing
-end
-
 ruby_block "log_set_iptables" do
   block { ::Chef::Log.info("** Set IPTables **") }
   action :nothing
