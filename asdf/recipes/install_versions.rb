@@ -3,27 +3,43 @@ include_recipe "asdf::log_output"
 bash "install_erlang" do  
   environment ({ 'HOME' => ::Dir.home("ubuntu"), 'USER' => "ubuntu" })
   user "ubuntu"
-  code "#{node["asdf"]["asdf_location"]} install erlang 20.0"
+  code "#{node["asdf"]["asdf_location"]} install erlang #{node["asdf"]["erlang_version"]}"	
+  notifies :run, "ruby_block[install_erlang]", :before      		
+end		
+		
+bash "root_install_erlang" do  		
+  code "#{node["asdf"]["root_asdf_location"]} install erlang #{node["asdf"]["erlang_version"]}"
   notifies :run, "ruby_block[install_erlang]", :before      
 end
 
 bash "install_elixir" do 
   environment ({ 'HOME' => ::Dir.home("ubuntu"), 'USER' => "ubuntu" })
   user "ubuntu" 
-  code "#{node["asdf"]["asdf_location"]} install elixir 1.5.1"
+  code "#{node["asdf"]["asdf_location"]} install elixir #{node["asdf"]["elixir_version"]}"		 
+  notifies :run, "ruby_block[install_elixir]", :before      		
+end		
+		
+bash "root_install_elixir" do 		
+  code "#{node["asdf"]["root_asdf_location"]} install elixir #{node["asdf"]["elixir_version"]}"
   notifies :run, "ruby_block[install_elixir]", :before      
 end
 
 bash "install_ruby" do  
   environment ({ 'HOME' => ::Dir.home("ubuntu"), 'USER' => "ubuntu" })
   user "ubuntu"
-  code "#{node["asdf"]["asdf_location"]} install ruby 2.4.2"
+  code "#{node["asdf"]["asdf_location"]} install ruby #{node["asdf"]["ruby_version"]}"
   notifies :run, "ruby_block[install_ruby]", :before       
 end
 
-bash "install_hex" do 
+# Common version used this will go away in the future
+bash "install_ruby" do  
   environment ({ 'HOME' => ::Dir.home("ubuntu"), 'USER' => "ubuntu" })
   user "ubuntu"
-  code "/home/ubuntu/.asdf/shims/mix local.hex --force"
+  code "#{node["asdf"]["asdf_location"]} install ruby 2.3.1"
   notifies :run, "ruby_block[install_ruby]", :before
+end
+
+bash "root_install_ruby" do  		
+  code "#{node["asdf"]["root_asdf_location"]} install ruby #{node["asdf"]["ruby_version"]}"		
+  notifies :run, "ruby_block[install_ruby]", :before       		
 end

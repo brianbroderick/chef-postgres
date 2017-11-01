@@ -47,3 +47,8 @@ ruby_block "install_codedeploy" do
   block { ::Chef::Log.info("** Installing Codedeploy **") }
   action :nothing
 end
+
+ruby_block "install_hex" do		
+  block { ::Chef::Log.info("** Installing Hex **") }		
+  action :nothing		
+end

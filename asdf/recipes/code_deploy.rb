@@ -23,3 +23,10 @@ directory "/code" do
   group "ubuntu"  
   recursive true
 end
+
+directory "/mnt/data/backups" do		
+  action :create		
+  owner "ubuntu"		
+  group "ubuntu"  		
+  recursive true    		
+end
