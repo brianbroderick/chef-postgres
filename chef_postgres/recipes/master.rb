@@ -89,15 +89,27 @@ bash "create_repl_user" do
   notifies :run, "ruby_block[log_create_repl]", :before
 end
 
+
 bash "create_base_backup" do
-  code <<-EOF_CBB
-  rm -rf #{backup_dir}/base_backup/*
-  pg_basebackup -d 'host=localhost user=#{repl_user} password=#{repl_pass}' -D #{backup_dir}/base_backup --xlog-method=stream
-  tar -C #{backup_dir} -czf #{backup_dir}/base_backup.tgz #{backup_dir}/base_backup/
-  EOF_CBB
-  not_if { user_created }
-  action :run
-  notifies :run, "ruby_block[log_create_base_backup]", :before
+    if version == "10"
+      code <<-EOF_CBB
+      rm -rf #{backup_dir}/base_backup/*
+      pg_basebackup -d 'host=localhost user=#{repl_user} password=#{repl_pass}' -D #{backup_dir}/base_backup
+      tar -C #{backup_dir} -czf #{backup_dir}/base_backup.tgz #{backup_dir}/base_backup/
+      EOF_CBB
+      not_if { user_created }
+      action :run
+      notifies :run, "ruby_block[log_create_base_backup]", :before
+    else
+      code <<-EOF_CBB
+      rm -rf #{backup_dir}/base_backup/*
+      pg_basebackup -d 'host=localhost user=#{repl_user} password=#{repl_pass}' -D #{backup_dir}/base_backup --xlog-method=stream
+      tar -C #{backup_dir} -czf #{backup_dir}/base_backup.tgz #{backup_dir}/base_backup/
+      EOF_CBB
+      not_if { user_created }
+      action :run
+      notifies :run, "ruby_block[log_create_base_backup]", :before
+  end
 end
 
 ruby_block "s3_upload_backup" do

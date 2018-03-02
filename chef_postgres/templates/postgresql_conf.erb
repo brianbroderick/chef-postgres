@@ -55,13 +55,13 @@ redislog.hosts = '<%= @config[:libs][:redislog_hosts] %>'
 
 data_directory = '<%= @config[:optimization][:data_directory] %>'         # use data in another directory
                                         # (change requires restart)
-hba_file = '/etc/postgresql/9.6/main/pg_hba.conf'       # host-based authentication file
+hba_file = '/etc/postgresql/<%= @config[:libs][:version] %>/main/pg_hba.conf'       # host-based authentication file
                                         # (change requires restart)
-ident_file = '/etc/postgresql/9.6/main/pg_ident.conf'   # ident configuration file
+ident_file = '/etc/postgresql/<%= @config[:libs][:version] %>/main/pg_ident.conf'   # ident configuration file
                                         # (change requires restart)
 
 # If external_pid_file is not explicitly set, no extra PID file is written.
-external_pid_file = '/var/run/postgresql/9.6-main.pid'                  # write an extra PID file
+external_pid_file = '/var/run/postgresql/<%= @config[:libs][:version] %>-main.pid'                  # write an extra PID file
                                         # (change requires restart)
 
 
@@ -509,7 +509,7 @@ log_timezone = 'UTC'
 
 # - Process Title -
 
-cluster_name = '9.6/main'                       # added to process titles if nonempty
+cluster_name = '<%= @config[:libs][:version] %>/main'                       # added to process titles if nonempty
                                         # (change requires restart)
 #update_process_title = on
 
@@ -525,7 +525,7 @@ cluster_name = '9.6/main'                       # added to process titles if non
 #track_io_timing = off
 #track_functions = none                 # none, pl, all
 #track_activity_query_size = 1024       # (change requires restart)
-stats_temp_directory = '/var/run/postgresql/9.6-main.pg_stat_tmp'
+stats_temp_directory = '/var/run/postgresql/<%= @config[:libs][:version] %>-main.pg_stat_tmp'
 
 
 # - Statistics Monitoring -
