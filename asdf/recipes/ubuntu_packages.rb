@@ -39,6 +39,10 @@ package "postgresql-client-#{version}"
 package "postgresql-common"
 package "postgresql-server-dev-#{version}"
 
+package "s3cmd" do
+  options "--no-install-recommends"
+end
+
 bash "install_brunch" do
   cwd "/home/ubuntu"
   code "npm install -g brunch"
@@ -61,4 +65,3 @@ service "stop_rabbitmq_server" do
   service_name "rabbitmq-server"
   notifies :run, "ruby_block[log_stop_rabbit]", :before
 end
-
