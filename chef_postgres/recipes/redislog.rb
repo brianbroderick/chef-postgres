@@ -23,4 +23,3 @@ service "stop_redis" do
   service_name "redis-server"
   notifies :run, "ruby_block[log_stop_redis]", :before
 end
-

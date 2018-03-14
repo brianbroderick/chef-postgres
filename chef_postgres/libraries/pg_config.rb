@@ -5,7 +5,7 @@
 class Chef
   class Provider
     class PgConfig < Chef::Provider::LWRPBase
-      attr_reader :node, :workload
+      attr_reader :node, :workload, :version
 
       def self.call(*args)
         new(*args).call
@@ -14,7 +14,7 @@ class Chef
       def initialize(node)
         @node = node
         @workload = node["chef_postgres"]["workload"].to_sym
-
+        @version = node["chef_postgres"]["version"]
         node.default["chef_postgres"]["pg_config"]["random_page_cost"] = 3.0
         node.default["chef_postgres"]["pg_config"]["synchronous_commit"] = "on"
       end
@@ -96,7 +96,7 @@ class Chef
           mixed: memory - 4096,
           desktop: memory / 4,
         }.fetch(workload)
-      end      
+      end
 
       def effective_cache_size_small
         { web: memory * 3 / 4,
@@ -105,7 +105,7 @@ class Chef
           mixed: memory * 3 / 4,
           desktop: memory / 4,
         }.fetch(workload)
-      end   
+      end
 
       def effective_cache
         # Estimate of how much memory is available for disk caching by the operating system
@@ -113,9 +113,9 @@ class Chef
         # and other applications
 
         @effective_cache ||= (memory > 16384) ? effective_cache_size_large : effective_cache_size_small
-      end         
+      end
 
-      def effective_cache_size        
+      def effective_cache_size
         ::BinaryRound.call(effective_cache)
       end
 
@@ -161,8 +161,12 @@ class Chef
                      mixed: 0.50,
                      desktop: 0.25,
         }.fetch(workload)
-
-        (node["filesystem"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
+        #todo create if block for version 10 vs version 9.6
+        if version == "10"
+          (node["filesystem"]["by_device"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
+        else
+          (node["filesystem"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
+        end
       end
 
       def checkpoint_segments_or_max_wal_size
