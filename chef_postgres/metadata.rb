@@ -11,3 +11,4 @@ issues_url "https://github.com/brianbroderick/chef_postgres/issues" if respond_t
 source_url "https://github.com/brianbroderick/chef_postgres" if respond_to?(:source_url)
 supports "ubuntu"
 depends "sysctl"
+#depends "aws"

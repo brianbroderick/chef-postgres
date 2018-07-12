@@ -165,7 +165,8 @@ class Chef
         if version == "10"
           (node["filesystem"]["by_device"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
         else
-          (node["filesystem"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
+          933
+          #(node["filesystem"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
         end
       end
 

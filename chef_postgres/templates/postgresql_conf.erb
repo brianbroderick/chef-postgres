@@ -264,8 +264,8 @@ archive_command = 'cd .'
 # Set these on the master and on any standby that will send replication data.
 
 <% if @config[:repl][:pg_node] == "master" && %w(warm_standby hot_standby).include?(@config[:repl][:cluster_type]) %>
-max_wal_senders = 4          # number of nodes + 2 (for possible reconnection attempts)
-max_replication_slots = 4    # max number of replication slots
+max_wal_senders = 25          # number of nodes + 2 (for possible reconnection attempts)
+max_replication_slots = 25    # max number of replication slots
 <% end %>
 
 <% if @config[:repl][:pg_node] == "master" && %w(warm_standby hot_standby).include?(@config[:repl][:cluster_type]) %>
