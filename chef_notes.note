@@ -1,0 +1,93 @@
+scp -r ubuntu@ip-10-1-1-121.us-west-2.compute.internal:/etc/postgresql/9.6/main/*.conf /mnt/data/backups/review_rocket/base
+scp -r -i ~/.ssh/key.pem ubuntu@ip-10-1-1-121.us-west-2.compute.internal:/etc/postgresql/9.6/main/*.conf /mnt/data/backups/review_rocket/base
+
+--review rocket copy conf files
+scp -r -i ~/.ssh/key.pem ubuntu@ip-10-1-1-54.us-west-2.compute.internal:/etc/postgresql/9.6/main/*.conf /mnt/data/backups/review_rocket/base
+
+ip-10-1-1-54.us-west-2.compute.internal
+
+scp user@host:/path/to/source-file /path/to/destination-folder
+
+scp -r -i ~/.ssh/platform-dev.pem * ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks/chef_postgres/recipes
+chef server ssh home dir ./chef-upload.sh
+to copy the platform key
+scp -r -i ~/.ssh/platform-dev.pem ~/.ssh/platform-dev.pem  ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/.ssh/
+rsync -avz -e “ssh -i ~/.ssh/dcos.pem” * ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks
+
+
+--knife examples
+knife bootstrap ip-10-0-2-7.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10 --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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","version":"10"}}}'
+
+knife bootstrap ip-10-1-1-179.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10 --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "10"}}'
+knife bootstrap ip-10-1-1-134.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10 --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":{"version":"10"}}'
+
+knife bootstrap ip-10-0-2-135.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10 --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "10"}}'
+
+
+knife bootstrap ip-10-0-2-85.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg96master --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "9.6"}}'
+
+
+sudo chef-client -r 'recipe[chef_postgres::master]' --json-attributes '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "10"}}'
+
+
+sudo chef-client
+--new pg10 box
+knife bootstrap ip-10-0-2-48.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg96master --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "9.6"}}'
+
+
+ip-10-0-2-48.ec2.internal
+
+ip-10-0-2-121.ec2.internal
+
+proper copy command
+rsync -avz -e 'ssh -i ~/.ssh/dcos.pem' /Users/patwright/chef_postgres/* ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks/
+proper knife command
+--Master
+knife bootstrap ip-10-0-2-147.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10dbatest --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "10", "server_name": "pg-dba-10test"}}'
+--follower
+knife bootstrap ip-10-0-2-98.ec2.internal -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10dbatestfol --sudo -r 'recipe[chef_postgres::standby]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "10", "server_name": "pg-dba-10test-fol"}}'
+--with data device
+data_device
+knife bootstrap 10.0.2.161 -x ubuntu -i ~/.ssh/platform-dev.pem  -N pg10dbatest --sudo -r 'recipe[chef_postgres::master]' -j '{"chef_postgres":  {"s3":  {"region": "us-west-2","bucket": "podium-cookbooks","access_key_id": "AKIAI2BXHM7MDI3K2BGQ","secret_access_key": "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"}, "version": "10", "data_device": "/dev/xvdl"}}'
+
+
+scp -r -i ~/.ssh/platform-dev.pem /Users/patwright/chef_postgres/* ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks/
+scp -r -i ~/.ssh/platform-dev.pem /Users/patwright/chef_postgres/chef_postgres/recipes/add_data_drive.rb ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks/chef_postgres/recipes/
+
+
+scp -r -i ~/.ssh/dcos.pem ubuntu@34.212.21.241:/mnt/data/backups/review_rocket/pg-2018-05-04.sql.gz /mnt/data/backups/
+
+scp -r -i ~/.ssh/platform-dev.pem ~/Downloads/pg-2018-05-04.sql.gz ubuntu@ec2-34-234-170-182.compute-1.amazonaws.com:/mnt/data/backups/
+
+scp -r -i ~/.ssh/dcos.pem ~/.ssh/platform-dev.pem ubuntu@34.212.21.241:~/.ssh/
+
+scp -r -i ~/.ssh/platform-dev.pem /Users/patwright/chef_postgres/chef_postgres/recipes/add_data_drive.rb ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks/chef_postgres/recipes/
+
+
+scp -r -i ~/.ssh/platform-dev.pem ~/Downloads/mamba_pg-2018-05-07.sql.gz ubuntu@ec2-52-3-224-211.compute-1.amazonaws.com:/mnt/data/backups/
+
+--
+scp -r -i ~/.ssh/platform-dev.pem ~/Downloads/pg-2018-05-04.sql.gz ubuntu@ec2-52-3-224-211.compute-1.amazonaws.com:/mnt/data/backups/*
+
+/Users/patwright/chef_postgres/chef_postgres/recipes/add_data_drive.rb ubuntu@ec2-35-170-58-74.compute-1.amazonaws.com:~/ops-chef/cookbooks/chef_postgres/recipes/
+
+
+ssh -i ~/.ssh/platform-dev.pem ubuntu@ec2-34-234-170-182.compute-1.amazonaws.com
+
+
+ec2-52-3-224-211.compute-1.amazonaws.com
+
+--venus
+ssh -i ~/.ssh/dcos.pem ubuntu@34.212.21.241
+
+ssh -i ~/.ssh/platform-dev.pem ubuntu@ec2-34-238-248-69.compute-1.amazonaws.com
+
+to get to smiley dan pg10
+ssh -i ~/.ssh/platform-dev.pem ubuntu@ec2-34-201-26-173.compute-1.amazonaws.com
+
+create r42.xlarge make sure to create storage and mark delete on terminate
+1 GB ebs vol
+3400 GB ebs vol --prod setting
+knife node delete pg10
+knife client delete pg10 or remove
+then delete the ec2 instance

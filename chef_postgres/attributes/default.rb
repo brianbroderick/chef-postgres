@@ -5,6 +5,7 @@ default["chef_postgres"]["release_apt_codename"] = node["lsb"]["codename"]
 default["chef_postgres"]["version"] = "9.6"
 default["chef_postgres"]["rh_version"] = node["chef_postgres"]["version"].gsub(/[^0-9]/, "")
 default["chef_postgres"]["workload"] = "oltp"
+default["chef_postgres"]["data_device"] = "/dev/xvdl"
 
 version = node["chef_postgres"]["version"]
 

@@ -13,9 +13,10 @@
 #   action [ :attach ]
 # end
 
+device = node["chef_postgres"]["data_device"]
 
 execute "format_vol" do
-  command "sudo mkfs.ext3 /dev/xvdl"
+  command "sudo mkfs.ext3 #{device}"
   action :run
   not_if {File.exists?("/mnt/data")}
 end
@@ -25,7 +26,7 @@ execute "mkdir_mnt" do
   not_if {File.exists?("/mnt/data")}
 end
 mount "/mnt/data" do
-  device "/dev/xvdl"
+  device "#{device}"  # "/dev/xvdl"
   fstype "ext3"
   action [:mount, :enable]
 end

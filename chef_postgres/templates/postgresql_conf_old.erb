@@ -6,7 +6,6 @@
 #
 #   name = value
 #
-# postgres10
 # (The "=" is optional.)  Whitespace may be used.  Comments are introduced with
 # "#" anywhere on a line.  The complete list of parameter names and allowed
 # values can be found in the PostgreSQL documentation.
@@ -17,9 +16,9 @@
 #
 # This file is read on server startup and when the server receives a SIGHUP
 # signal.  If you edit the file on a running system, you have to SIGHUP the
-# server for the changes to take effect, run "pg_ctl reload", or execute
-# "SELECT pg_reload_conf()".  Some parameters, which are marked below,
-# require a server shutdown and restart to take effect.
+# server for the changes to take effect, or use "pg_ctl reload".  Some
+# parameters, which are marked below, require a server shutdown and restart to
+# take effect.
 #
 # Any parameter can also be given as a command-line option to the server, e.g.,
 # "postgres -c log_connections=on".  Some parameters can be changed at run time
@@ -95,14 +94,14 @@ unix_socket_directories = '/var/run/postgresql' # comma-separated list of direct
 #authentication_timeout = 1min          # 1s-600s
 ssl = on                                # (change requires restart)
 #ssl_ciphers = 'HIGH:MEDIUM:+3DES:!aNULL' # allowed SSL ciphers
-#ssl_prefer_server_ciphers = on
-#ssl_ecdh_curve = 'prime256v1'
-#ssl_dh_params_file = ''
-ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
-#ssl_ca_file = ''
-#ssl_crl_file = ''
-#password_encryption = md5		# md5 or scram-sha-256
+                                        # (change requires restart)
+#ssl_prefer_server_ciphers = on         # (change requires restart)
+#ssl_ecdh_curve = 'prime256v1'          # (change requires restart)
+ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'          # (change requires restart)
+ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'         # (change requires restart)
+#ssl_ca_file = ''                       # (change requires restart)
+#ssl_crl_file = ''                      # (change requires restart)
+#password_encryption = on
 #db_user_namespace = off
 #row_security = on
 
@@ -113,12 +112,12 @@ ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
 # - TCP Keepalives -
 # see "man 7 tcp" for details
 
-#tcp_keepalives_idle = 0		# TCP_KEEPIDLE, in seconds;
-					# 0 selects the system default
-#tcp_keepalives_interval = 0		# TCP_KEEPINTVL, in seconds;
-					# 0 selects the system default
-#tcp_keepalives_count = 0		# TCP_KEEPCNT;
-					# 0 selects the system default
+#tcp_keepalives_idle = 0                # TCP_KEEPIDLE, in seconds;
+                                        # 0 selects the system default
+#tcp_keepalives_interval = 0            # TCP_KEEPINTVL, in seconds;
+                                        # 0 selects the system default
+#tcp_keepalives_count = 0               # TCP_KEEPCNT;
+                                        # 0 selects the system default
 
 
 #------------------------------------------------------------------------------
@@ -151,40 +150,38 @@ dynamic_shared_memory_type = posix      # the default is the first option
 
 # - Disk -
 
-#temp_file_limit = -1			# limits per-process temp file space
-					# in kB, or -1 for no limit
+#temp_file_limit = -1                   # limits per-process temp file space
+                                        # in kB, or -1 for no limit
 
 # - Kernel Resource Usage -
 
-#max_files_per_process = 1000		# min 25
-					# (change requires restart)
-#shared_preload_libraries = ''		# (change requires restart)
+#max_files_per_process = 1000           # min 25
+                                        # (change requires restart)
+#shared_preload_libraries = ''          # (change requires restart)
 
 # - Cost-Based Vacuum Delay -
 
-#vacuum_cost_delay = 0			# 0-100 milliseconds
-#vacuum_cost_page_hit = 1		# 0-10000 credits
-#vacuum_cost_page_miss = 10		# 0-10000 credits
-#vacuum_cost_page_dirty = 20		# 0-10000 credits
-#vacuum_cost_limit = 200		# 1-10000 credits
+#vacuum_cost_delay = 0                  # 0-100 milliseconds
+#vacuum_cost_page_hit = 1               # 0-10000 credits
+#vacuum_cost_page_miss = 10             # 0-10000 credits
+#vacuum_cost_page_dirty = 20            # 0-10000 credits
+#vacuum_cost_limit = 200                # 1-10000 credits
 
 # - Background Writer -
 
-#bgwriter_delay = 200ms			# 10-10000ms between rounds
-#bgwriter_lru_maxpages = 100		# 0-1000 max buffers written/round
-#bgwriter_lru_multiplier = 2.0		# 0-10.0 multiplier on buffers scanned/round
-#bgwriter_flush_after = 0		# measured in pages, 0 disables
+#bgwriter_delay = 200ms                 # 10-10000ms between rounds
+#bgwriter_lru_maxpages = 100            # 0-1000 max buffers written/round
+#bgwriter_lru_multiplier = 2.0          # 0-10.0 multiplier on buffers scanned/round
+#bgwriter_flush_after = 512kB           # measured in pages, 0 disables
 
 # - Asynchronous Behavior -
 
-#effective_io_concurrency = 1		# 1-1000; 0 disables prefetching
-#max_worker_processes = 8		# (change requires restart)
-#max_parallel_workers_per_gather = 0	# taken from max_parallel_workers
-#max_parallel_workers = 8		# maximum number of max_worker_processes that
-					# can be used in parallel queries
-#old_snapshot_threshold = -1		# 1min-60d; -1 disables; 0 is immediate
-					# (change requires restart)
-#backend_flush_after = 0		# measured in pages, 0 disables
+#effective_io_concurrency = 1           # 1-1000; 0 disables prefetching
+#max_worker_processes = 8               # (change requires restart)
+#max_parallel_workers_per_gather = 0    # taken from max_worker_processes
+#old_snapshot_threshold = -1            # 1min-60d; -1 disables; 0 is immediate
+                                        # (change requires restart)
+#backend_flush_after = 0                # measured in pages, 0 disables
 
 
 #------------------------------------------------------------------------------
@@ -222,8 +219,8 @@ synchronous_commit = <%= @config[:optimization][:synchronous_commit] %>         
 #wal_writer_delay = 200ms               # 1-10000 milliseconds
 #wal_writer_flush_after = 1MB           # measured in pages, 0 disables
 
-#commit_delay = 0			# range 0-100000, in microseconds
-#commit_siblings = 5			# range 1-1000
+#commit_delay = 0                       # range 0-100000, in microseconds
+#commit_siblings = 5                    # range 1-1000
 
 # - Checkpoints -
 
@@ -319,14 +316,6 @@ hot_standby_feedback = on               # send info from standby to prevent
 #wal_retrieve_retry_interval = 5s       # time to wait before retrying to
                                         # retrieve WAL after a failed attempt
 
-# - Subscribers -
-
-# These settings are ignored on a publisher.
-
-#max_logical_replication_workers = 4	# taken from max_worker_processes
-					# (change requires restart)
-#max_sync_workers_per_subscription = 2	# taken from max_logical_replication_workers
-
 
 #------------------------------------------------------------------------------
 # QUERY TUNING
@@ -348,26 +337,25 @@ hot_standby_feedback = on               # send info from standby to prevent
 
 # - Planner Cost Constants -
 
-#seq_page_cost = 1.0			# measured on an arbitrary scale
-random_page_cost = <%= @config[:optimization][:random_page_cost] %>              	# same scale as above
-#cpu_tuple_cost = 0.01			# same scale as above
-#cpu_index_tuple_cost = 0.005		# same scale as above
-#cpu_operator_cost = 0.0025		# same scale as above
-#parallel_tuple_cost = 0.1		# same scale as above
-#parallel_setup_cost = 1000.0	# same scale as above
-#min_parallel_table_scan_size = 8MB
-#min_parallel_index_scan_size = 512kB
+#seq_page_cost = 1.0                    # measured on an arbitrary scale
+random_page_cost = <%= @config[:optimization][:random_page_cost] %>                 # same scale as above
+#cpu_tuple_cost = 0.01                  # same scale as above
+#cpu_index_tuple_cost = 0.005           # same scale as above
+#cpu_operator_cost = 0.0025             # same scale as above
+#parallel_tuple_cost = 0.1              # same scale as above
+#parallel_setup_cost = 1000.0   # same scale as above
+#min_parallel_relation_size = 8MB
 effective_cache_size = <%= @config[:optimization][:effective_cache_size] %>
 
 # - Genetic Query Optimizer -
 
 #geqo = on
 #geqo_threshold = 12
-#geqo_effort = 5			# range 1-10
-#geqo_pool_size = 0			# selects default based on effort
-#geqo_generations = 0			# selects default based on effort
-#geqo_selection_bias = 2.0		# range 1.5-2.0
-#geqo_seed = 0.0			# range 0.0-1.0
+#geqo_effort = 5                        # range 1-10
+#geqo_pool_size = 0                     # selects default based on effort
+#geqo_generations = 0                   # selects default based on effort
+#geqo_selection_bias = 2.0              # range 1.5-2.0
+#geqo_seed = 0.0                        # range 0.0-1.0
 
 # - Other Planner Options -
 
@@ -375,8 +363,8 @@ default_statistics_target = <%= @config[:optimization][:default_statistics_targe
 #constraint_exclusion = partition       # on, off, or partition
 #cursor_tuple_fraction = 0.1            # range 0.0-1.0
 #from_collapse_limit = 8
-#join_collapse_limit = 8		# 1 disables collapsing of explicit
-					# JOIN clauses
+#join_collapse_limit = 8                # 1 disables collapsing of explicit
+                                        # JOIN clauses
 #force_parallel_mode = off
 
 
@@ -386,10 +374,10 @@ default_statistics_target = <%= @config[:optimization][:default_statistics_targe
 
 # - Where to Log -
 
-#log_destination = 'stderr'		# Valid values are combinations of
-					# stderr, csvlog, syslog, and eventlog,
-					# depending on platform.  csvlog
-					# requires logging_collector to be on.
+#log_destination = 'stderr'             # Valid values are combinations of
+                                        # stderr, csvlog, syslog, and eventlog,
+                                        # depending on platform.  csvlog
+                                        # requires logging_collector to be on.
 
 # This is used when logging to stderr:
 logging_collector = on ### default off  # Enable capturing of stderr and csvlog
@@ -425,49 +413,48 @@ log_rotation_size = 1024MB              # Automatic rotation of logfiles will
 #syslog_split_messages = on
 
 # This is only relevant when logging to eventlog (win32):
-# (change requires restart)
 #event_source = 'PostgreSQL'
 
 # - When to Log -
 
-#client_min_messages = notice		# values in order of decreasing detail:
-					#   debug5
-					#   debug4
-					#   debug3
-					#   debug2
-					#   debug1
-					#   log
-					#   notice
-					#   warning
-					#   error
+#client_min_messages = notice           # values in order of decreasing detail:
+                                        #   debug5
+                                        #   debug4
+                                        #   debug3
+                                        #   debug2
+                                        #   debug1
+                                        #   log
+                                        #   notice
+                                        #   warning
+                                        #   error
 
-#log_min_messages = warning		# values in order of decreasing detail:
-					#   debug5
-					#   debug4
-					#   debug3
-					#   debug2
-					#   debug1
-					#   info
-					#   notice
-					#   warning
-					#   error
-					#   log
-					#   fatal
-					#   panic
+#log_min_messages = warning             # values in order of decreasing detail:
+                                        #   debug5
+                                        #   debug4
+                                        #   debug3
+                                        #   debug2
+                                        #   debug1
+                                        #   info
+                                        #   notice
+                                        #   warning
+                                        #   error
+                                        #   log
+                                        #   fatal
+                                        #   panic
 
-#log_min_error_statement = error	# values in order of decreasing detail:
-					#   debug5
-					#   debug4
-					#   debug3
-					#   debug2
-					#   debug1
-					#   info
-					#   notice
-					#   warning
-					#   error
-					#   log
-					#   fatal
-					#   panic (effectively off)
+#log_min_error_statement = error        # values in order of decreasing detail:
+                                        #   debug5
+                                        #   debug4
+                                        #   debug3
+                                        #   debug2
+                                        #   debug1
+                                        #   info
+                                        #   notice
+                                        #   warning
+                                        #   error
+                                        #   log
+                                        #   fatal
+                                        #   panic (effectively off)
 
 <%# TODO make this configurable %>
 log_min_duration_statement = 1000
@@ -486,7 +473,7 @@ log_connections = on ### default: off
 
 log_disconnections = on ### default: off
 #log_duration = off
-#log_error_verbosity = default		# terse, default, or verbose messages
+#log_error_verbosity = default          # terse, default, or verbose messages
 #log_hostname = off
 # RDS format: %t:%r:%u@%d:[%p]:
 # log_line_prefix = '%m [%p] %q%u@%d '
@@ -587,10 +574,10 @@ log_autovacuum_min_duration = 0 ### default -1 # -1 disables, 0 logs all actions
 
 # - Statement Behavior -
 
-#search_path = '"$user", public'	# schema names
-#default_tablespace = ''		# a tablespace name, '' uses the default
-#temp_tablespaces = ''			# a list of tablespace names, '' uses
-					# only default tablespace
+#search_path = '"$user", public'        # schema names
+#default_tablespace = ''                # a tablespace name, '' uses the default
+#temp_tablespaces = ''                  # a list of tablespace names, '' uses
+                                        # only default tablespace
 #check_function_bodies = on
 #default_transaction_isolation = 'read committed'
 #default_transaction_read_only = off
@@ -603,7 +590,7 @@ statement_timeout = 900000                  # in milliseconds, 0 is disabled
 #vacuum_freeze_table_age = 150000000
 #vacuum_multixact_freeze_min_age = 5000000
 #vacuum_multixact_freeze_table_age = 150000000
-#bytea_output = 'hex'			# hex, escape
+#bytea_output = 'hex'                   # hex, escape
 #xmlbinary = 'base64'
 #xmloption = 'content'
 #gin_fuzzy_search_limit = 0
@@ -615,22 +602,22 @@ datestyle = 'iso, mdy'
 #intervalstyle = 'postgres'
 timezone = 'UTC'
 #timezone_abbreviations = 'Default'     # Select the set of available time zone
-					# abbreviations.  Currently, there are
-					#   Default
-					#   Australia (historical usage)
-					#   India
-					# You can create your own file in
-					# share/timezonesets/.
-#extra_float_digits = 0			# min -15, max 3
-#client_encoding = sql_ascii		# actually, defaults to database
-					# encoding
+                                        # abbreviations.  Currently, there are
+                                        #   Default
+                                        #   Australia (historical usage)
+                                        #   India
+                                        # You can create your own file in
+                                        # share/timezonesets/.
+#extra_float_digits = 0                 # min -15, max 3
+#client_encoding = sql_ascii            # actually, defaults to database
+                                        # encoding
 
 # These settings are initialized by initdb, but they can be changed.
-lc_messages = 'en_US.UTF-8'			# locale for system error message
-					# strings
-lc_monetary = 'en_US.UTF-8'			# locale for monetary formatting
-lc_numeric = 'en_US.UTF-8'			# locale for number formatting
-lc_time = 'en_US.UTF-8'				# locale for time formatting
+lc_messages = 'en_US.UTF-8'                     # locale for system error message
+                                        # strings
+lc_monetary = 'en_US.UTF-8'                     # locale for monetary formatting
+lc_numeric = 'en_US.UTF-8'                      # locale for number formatting
+lc_time = 'en_US.UTF-8'                         # locale for time formatting
 
 # default configuration for text search
 default_text_search_config = 'pg_catalog.english'
@@ -648,14 +635,10 @@ default_text_search_config = 'pg_catalog.english'
 
 #deadlock_timeout = 1s
 deadlock_timeout = 5s # to avoid some deadlocking due to a slightly slower query without compromising speed too much
-#max_locks_per_transaction = 64		# min 10
-					# (change requires restart)
-#max_pred_locks_per_transaction = 64	# min 10
-					# (change requires restart)
-#max_pred_locks_per_relation = -2	# negative values mean
-					# (max_pred_locks_per_transaction
-					#  / -max_pred_locks_per_relation) - 1
-#max_pred_locks_per_page = 2            # min 0
+#max_locks_per_transaction = 64         # min 10
+                                        # (change requires restart)
+#max_pred_locks_per_transaction = 64    # min 10
+                                        # (change requires restart)
 
 
 #------------------------------------------------------------------------------
@@ -665,12 +648,13 @@ deadlock_timeout = 5s # to avoid some deadlocking due to a slightly slower query
 # - Previous PostgreSQL Versions -
 
 #array_nulls = on
-#backslash_quote = safe_encoding	# on, off, or safe_encoding
+#backslash_quote = safe_encoding        # on, off, or safe_encoding
 #default_with_oids = off
 #escape_string_warning = on
 #lo_compat_privileges = off
 #operator_precedence_warning = off
 #quote_all_identifiers = off
+#sql_inheritance = on
 #standard_conforming_strings = on
 #synchronize_seqscans = on
 
@@ -683,8 +667,8 @@ deadlock_timeout = 5s # to avoid some deadlocking due to a slightly slower query
 # ERROR HANDLING
 #------------------------------------------------------------------------------
 
-#exit_on_error = off			# terminate session on any error?
-#restart_after_crash = on		# reinitialize after backend crash?
+#exit_on_error = off                    # terminate session on any error?
+#restart_after_crash = on               # reinitialize after backend crash?
 
 
 #------------------------------------------------------------------------------
@@ -694,10 +678,10 @@ deadlock_timeout = 5s # to avoid some deadlocking due to a slightly slower query
 # These options allow settings to be loaded from files other than the
 # default postgresql.conf.
 
-#include_dir = 'conf.d'			# include files ending in '.conf' from
-					# directory 'conf.d'
-#include_if_exists = 'exists.conf'	# include file only if it exists
-#include = 'special.conf'		# include file
+#include_dir = 'conf.d'                 # include files ending in '.conf' from
+                                        # directory 'conf.d'
+#include_if_exists = 'exists.conf'      # include file only if it exists
+#include = 'special.conf'               # include file
 
 
 #------------------------------------------------------------------------------

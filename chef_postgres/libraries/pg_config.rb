@@ -154,20 +154,13 @@ class Chef
       def wal_keep_segments
         # Convert to modifier % of available disk space on log drive in MB, then divide by 16MB
         # If log location becomes configurable, the drive needs to also become configurable
-
         modifier = { web: 0.50,
                      oltp: 0.50,
                      dw: 0.50,
                      mixed: 0.50,
                      desktop: 0.25,
         }.fetch(workload)
-        #todo create if block for version 10 vs version 9.6
-        if version == "10"
           (node["filesystem"]["by_device"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
-        else
-          933
-          #(node["filesystem"]["/dev/xvda1"]["kb_available"].to_f * modifier / 1024 / 16).round
-        end
       end
 
       def checkpoint_segments_or_max_wal_size
@@ -237,7 +230,6 @@ class Chef
 
         node["chef_postgres"]["pg_config"]["synchronous_commit"]
       end
-
       def version
         node["chef_postgres"]["version"]
       end

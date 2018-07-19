@@ -11,10 +11,13 @@ package "libssl-dev"
 package "libkrb5-dev"
 package "libhiredis-dev"
 package "redis-server"
-
 # For Debezium / Decoderbufs
 
 package "software-properties-common" do
+  options "--no-install-recommends"
+end
+
+package "s3cmd" do
   options "--no-install-recommends"
 end
 

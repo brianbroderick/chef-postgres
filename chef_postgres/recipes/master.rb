@@ -10,6 +10,7 @@ node.default["chef_postgres"]["pg_config"]["pg_node"] = "master" # opts: master,
 include_recipe "chef_postgres::log_output"
 include_recipe "chef_postgres::add_data_drive"
 include_recipe "chef_postgres::ubuntu_packages"
+include_recipe "chef_postgres::install_s3cmd"
 include_recipe "chef_postgres::config_postgres"
 include_recipe "chef_postgres::security"
 
